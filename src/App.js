@@ -200,7 +200,7 @@ class App extends Component {
         '<h4>' + venue.name + '</h4>' +
         '<p>' + this.aft(venue.location.formattedAddress) + '</p>' +
         '<p>' + venue.hereNow.summary + '</p>' +
-        '<img class="middlr" src="' + this.getGoogleImage(venue) + '" />' +
+        '<img class="middlr" alt="' + venue.name + '" src="' + this.getGoogleImage(venue) + '" />' +
         '</div>';
         marker.addListener('click', () => {
           if (marker.getAnimation() !== null) { marker.setAnimation(null); }
@@ -270,7 +270,7 @@ class App extends Component {
             <ul id="places-list">
               {
                 this.state.filtered && this.state.filtered.map((venue, key) => (
-                  <li className="transition" title={ venue.name } key={ venue.id } onClick={() => { this.li_click(venue) }}>
+                  <li className="transition" key={ venue.id } onClick={() => { this.li_click(venue) }}>
                     <h4><strong><a title={ venue.name } href={"https://www.google.com/search?q=" + venue.name}>{ venue.name }</a></strong></h4>
                     <p>
                       {
@@ -282,7 +282,7 @@ class App extends Component {
                       }
                     </p>
                     <p>{ venue.hereNow.summary }</p>
-                    <img className="polaroid" src={this.getGoogleImage(venue)} />
+                    <img className="polaroid" src={this.getGoogleImage(venue)} alt={ venue.name } />
                   </li>
                 ))
               }
