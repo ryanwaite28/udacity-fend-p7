@@ -37,7 +37,7 @@ class SideBar extends Component {
         <div id="sidebar-inner">
           { this.props.wikidata &&
             <p className="text-center">
-              <Button variant="contained" color="primary" className={classes.button} onClick={this.handleShow}>
+              <Button variant="contained" color="primary" className={classes.button} onClick={this.props.handleShow}>
                 Info
               </Button>
             </p>
