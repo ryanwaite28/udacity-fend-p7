@@ -14,6 +14,6 @@ Project created using React JS, Foursquare API and Google Maps API.
 
 Deployed on Heroku: https://rmw-react-neighborhood-map.herokuapp.com/
 
----
+-----
 # Ryan M. Waite
 ### Web & Mobile Developer
