@@ -10,9 +10,45 @@
 <br/><br/>
 > Udacity Project Summary
 
-Project created using React JS, Foursquare API and Google Maps API.
+Project created using React JS, Foursquare API and Google Maps API. <br/>
+
+This demonstrates the understanding of React JS, Service Workers, APIs, Responsive Design, and Accessibility. <br/>
+
+This is for anyone who wants to learn about places in Maryland (Also for new developers learning React js).
+
+* ISC license
+* limitations: needs internet JUST to cache the assets; works offline afterwards :)
 
 Deployed on Heroku: https://rmw-react-neighborhood-map.herokuapp.com/
+
+
+## Dependencies
+* React
+* React Material UI
+* idb
+* bootstrap
+* Google Maps API
+* FourSquare API
+* WikiPedia API
+
+
+## Feature
+* Responsive
+* Accessible
+* Mobile First
+* Single Page App
+* Offline First
+
+
+## How to run
+* install `node` and `npm`
+* clone this repo with `git` or download and extract via zip
+* open terminal and change directory into project root
+* run `npm install`
+* run `npm start`
+* open browser to `localhost:3000`
+* enjoy!
+
 
 -----
 # Ryan M. Waite

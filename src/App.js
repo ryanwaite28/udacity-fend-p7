@@ -1,69 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
+import MapDiv from './components/MapDiv';
+import NavBar from './components/NavBar';
+import SideBar from './components/SideBar';
+import InfoModal from './components/InfoModal';
 
 import * as utils from './utils'
-
-
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-  paper: {
-    // position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    maxWidth: '95%'
-  }
-});
-
-function sort_by(array, property, direction) {
-  let tempArray = array;
-  tempArray.sort(function(a, b){
-    var x = a[property].constructor === String && a[property].toLowerCase() || a[property];
-    var y = b[property].constructor === String && b[property].toLowerCase() || b[property];
-    let value = direction && String(direction) || "asc";
-    switch(value) {
-      case "asc":
-        // asc
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
-        return 0;
-      case "desc":
-        // desc
-        if (x > y) {return -1;}
-        if (x < y) {return 1;}
-        return 0;
-      default:
-        // asc
-        if (x < y) {return -1;}
-        if (x > y) {return 1;}
-        return 0;
-    }
-  });
-  return tempArray;
-}
-
-function getModalStyle() {
-  return {
-    top: `50%`,
-    // left: `${left}%`,
-    // transform: `translate(-${top}%, -${left}%)`,
-    display: 'block',
-    margin: 'auto'
-  };
-}
 
 
 
@@ -77,87 +20,25 @@ class App extends Component {
       showModal: false
     }
     this.toggleSideBar = this.toggleSideBar.bind(this);
-    this.loadPlaces = this.loadPlaces.bind(this);
     this.menuKeyEnter = this.menuKeyEnter.bind(this);
+    this.liKeyEnter = this.liKeyEnter.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.li_click = this.li_click.bind(this);
+    this.liKeyEnter = this.liKeyEnter.bind(this);
+    this.filterVenues = this.filterVenues.bind(this);
   }
 
-  handleClose() {
+  handleClose () {
     this.setState({ showModal: false });
   }
 
-  handleShow() {
+  handleShow () {
     this.setState({ showModal: true });
   }
 
-  toggleSideBar() {
+  toggleSideBar () {
     this.setState(state => ({ sidebarOpen: !state.sidebarOpen }));
-  }
-
-  loadPlaces() {
-    return new Promise(function(resolve, reject){
-      utils.getVenues()
-      .then(venues => {
-        if(venues.length > 0) {
-          console.log('returning venues from idb');
-          return resolve(venues) ;
-        }
-        console.log('fetching venues...');
-        let city = 'Silver Spring, MD';
-        let query = 'Shopping';
-        var apiURL = 'https://api.foursquare.com/v2/venues/search?client_id=N1IAMKZUIK1AUHKRFGFBKPQ2YKDSBAKS4NTER5SYZN5CROR1&client_secret=4MKLXVLU2FGZQVRMAEDC15P0TFJGSCY3ZUYUZ0KHQQQLQ5R3&v=20130815%20&limit=33&near=' + city + '&query=' + query + '';
-        fetch(apiURL)
-        .then(resp => resp.json())
-        .then(json => {
-          let { venues } = json.response;
-          console.log('storing venues...');
-          utils.storeVenues(venues)
-          .then(res => {
-            console.log('stored venues');
-            return resolve(venues);
-          })
-        })
-        .catch(error => {
-          reject(error);
-        })
-      })
-      .catch(error => {
-        reject(error);
-      })
-    });
-  }
-
-  loadWiki() {
-    return new Promise(function(resolve, reject){
-      utils.getAJAXfetches("moco-wiki")
-      .then(result => {
-        if(result) {
-          console.log('returning moco-wiki from idb');
-          return resolve(result) ;
-        }
-        console.log('fetching moco-wiki...');
-        window.$.ajax({
-          url: 'https://en.wikipedia.org/w/api.php?action=opensearch&search=montgomery%20county%20maryland&format=json&callback=wikicallback',
-          dataType: 'jsonp',
-          success: function(resp) {
-            console.log('storing moco-wiki...');
-            utils.storeAJAXfetch("moco-wiki", resp)
-            .then(res => {
-              console.log('stored moco-wiki');
-              return resolve(resp);
-            })
-          },
-          error: function(e) {
-            console.log(e);
-            reject(e);
-          }
-        })
-      })
-      .catch(error => {
-        reject(error);
-      })
-    });
   }
 
   getGoogleMaps() {
@@ -181,22 +62,15 @@ class App extends Component {
     this.getGoogleMaps();
   }
 
-  aft = (l) => {
-    let s = "";
-    let i = 0;
-    let e = l.length - 1;
-    for(i = 0; i < e; i++) {
-      s += (l[i] + "<br/>")
-    }
-    s += l[i];
-    return s;
-  }
-
   li_click(venue) {
     let marker = this.markers.filter(m => m.venue.id === venue.id)[0];
     let info_obj = this.info_boxes.filter(i => i.id === venue.id)[0];
     let infoBox = info_obj && info_obj.contents || "nothing...";
     if(marker && infoBox) {
+      if (marker.getAnimation() !== null) { marker.setAnimation(null); }
+      else { marker.setAnimation(this.google.maps.Animation.BOUNCE); }
+      setTimeout(() => { marker.setAnimation(null) }, 1500);
+
       this.infowindow.setContent(infoBox);
       this.map.setZoom(13);
       this.map.setCenter(marker.position);
@@ -208,14 +82,10 @@ class App extends Component {
     }
   }
 
-  getGoogleImage(venue) {
-    return 'https://maps.googleapis.com/maps/api/streetview?size=150x150&location=' + venue.location.lat + ',' + venue.location.lng + '&heading=151.78&pitch=-0.76&key=AIzaSyB6N63ZIGH4b8Hgm9KhodA87Guuiem3C8Y'
-  }
-
   componentDidMount() {
     let get_google = this.getGoogleMaps();
-    let get_venues = this.loadPlaces();
-    let get_wiki = this.loadWiki();
+    let get_venues = utils.loadPlaces();
+    let get_wiki = utils.loadWiki();
 
     Promise.all([ get_google, get_venues, get_wiki ])
     .then(values => {
@@ -227,14 +97,13 @@ class App extends Component {
       let markers = [];
       let info_boxes = [];
 
+      this.google = google;
       this.infowindow = new google.maps.InfoWindow();
       this.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 9,
         scrollwheel: true,
         center: { lat: venues[0].location.lat, lng: venues[0].location.lng }
       });
-
-      /* --- */
 
       venues.forEach(venue => {
         let marker = new google.maps.Marker({
@@ -247,9 +116,9 @@ class App extends Component {
         });
         let infoBox = '<div class="info_box">' +
         '<h4>' + venue.name + '</h4>' +
-        '<p>' + this.aft(venue.location.formattedAddress) + '</p>' +
+        '<p>' + utils.aft(venue.location.formattedAddress) + '</p>' +
         '<p>' + venue.hereNow.summary + '</p>' +
-        '<img class="middlr" alt="' + venue.name + '" src="' + this.getGoogleImage(venue) + '" />' +
+        '<img class="middlr" alt="' + venue.name + '" src="' + utils.getGoogleImage(venue) + '" />' +
         '</div>';
         marker.addListener('click', () => {
           if (marker.getAnimation() !== null) { marker.setAnimation(null); }
@@ -267,9 +136,9 @@ class App extends Component {
         info_boxes.push({ id: venue.id, name: venue.name, contents: infoBox });
       });
 
-      this.venues = sort_by(venues, "name", "asc");
-      this.markers = sort_by(markers, "name", "asc");
-      this.info_boxes = sort_by(info_boxes, "name", "asc");
+      this.venues = utils.sort_by(venues, "name", "asc");
+      this.markers = utils.sort_by(markers, "name", "asc");
+      this.info_boxes = utils.sort_by(info_boxes, "name", "asc");
 
       this.setState({ sidebarOpen: true, filtered: this.venues, wikidata });
     })
@@ -296,95 +165,56 @@ class App extends Component {
     }
   }
 
+  liKeyEnter(event, venue) {
+    var code = event.keyCode || event.which;
+    if(code === 13) {
+      this.li_click(venue);
+    }
+  }
+
   render() {
-    let { classes } = this.props;
     let displaySidebar = this.state.sidebarOpen ? "block" : "none";
     let menuText = this.state.sidebarOpen ? "Close" : "Open";
 
     return (
       <div id="app-container">
         {/* Nav Bar */}
-        <nav id="navbar" role="navigation">
-          <h3 id="head-text">Neighborhood Maps</h3>
-          <h3 tabIndex="0" className="transition menu-text" title={ menuText + " Sidebar" }
-            onClick={() => { this.toggleSideBar() }} onKeyPress={this.menuKeyEnter}>
-            {
-              this.state.sidebarOpen ?
-              <i className="material-icons" style={{lineHeight: "inherit"}}>clear</i> :
-              <i className="material-icons" style={{lineHeight: "inherit"}}>menu</i>
-            }
-          </h3>
-        </nav>
+        <NavBar
+          menuText={menuText}
+          sidebarOpen={this.state.sidebarOpen}
+          toggleSideBar={this.toggleSideBar}
+          li_click={this.li_click}
+          menuKeyEnter={this.menuKeyEnter} />
 
         {/* Side Bar */}
-        <section id="sidebar" style={{ display: displaySidebar }}>
-          <div id="sidebar-inner">
-            { this.state.wikidata &&
-              <p className="text-center">
-                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleShow}>
-                  Info
-                </Button>
-              </p>
-            }
-
-            <input className="transition middlr input-s1" placeholder="Filter Venues"
-              value={this.state.query} onChange={(e) => { this.filterVenues(e.target.value) }} />
-            <ul id="places-list">
-              {
-                this.state.filtered && this.state.filtered.map((venue, key) => (
-                  <li className="transition" key={ venue.id } onClick={() => { this.li_click(venue) }}>
-                    <h5><strong><a title={ venue.name } href={"https://www.google.com/search?q=" + venue.name}>{ venue.name }</a></strong></h5>
-                    <p>
-                      {
-                        venue.location.formattedAddress.map((value, index) => {
-                          return index === (venue.location.formattedAddress.length - 1) ?
-                          <span key={index}><span>{value}</span></span> :
-                          (<span  key={index}><span>{value}</span><br/></span>)
-                        })
-                      }
-                    </p>
-                    <p>{ venue.hereNow.summary }</p>
-                    <img className="polaroid" src={this.getGoogleImage(venue)} alt={ venue.name } />
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </section>
+        <SideBar
+          menuText={menuText}
+          wikidata={this.state.wikidata}
+          query={this.state.query}
+          filtered={this.state.filtered}
+          sidebarOpen={this.state.sidebarOpen}
+          toggleSideBar={this.toggleSideBar}
+          liKeyEnter={this.liKeyEnter}
+          filterVenues={this.filterVenues}
+          li_click={this.li_click}
+          liKeyEnter={this.liKeyEnter}
+          displaySidebar={displaySidebar} />
 
         {/* Modal */}
         {
           this.state.wikidata && (
-            <Modal aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description" open={this.state.showModal} onClose={this.handleClose}>
-              <div className="modal-box">
-                <div style={getModalStyle()} className={classes.paper}>
-                  <Typography variant="title" id="modal-title">
-                    {this.state.wikidata[1][0]}
-                  </Typography>
-
-                  <br/>
-
-                  <p>
-                    {this.state.wikidata[2][0]}
-                  </p>
-                  <p>
-                    <a title={this.state.wikidata[1][0]} href={this.state.wikidata[3][0]}>Read more on wikipedia</a>
-                  </p>
-                </div>
-              </div>
-            </Modal>
+            <InfoModal
+              wikidata={this.state.wikidata}
+              showModal={this.state.showModal}
+              handleClose={this.handleClose}/>
           )
         }
 
         {/* Map Div */}
-        <main>
-          <div role="application" aria-hidden="true" id="map"></div>
-        </main>
+        <MapDiv />
       </div>
     );
   }
 }
 
-const AppWrapped = withStyles(styles)(App);
-
-export default AppWrapped;
+export default App;

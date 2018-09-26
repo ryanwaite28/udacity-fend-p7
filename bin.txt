@@ -1,0 +1,5 @@
+<h5><strong><a title={ venue.name } href={"https://www.google.com/search?q=" + venue.name}>{ venue.name }</a></strong></h5>
+
+<h5><strong>
+  <span className="venue-name" onClick={() => { window.open("https://www.google.com/search?q=" + venue.name + ' ' + venue.location.formattedAddress[venue.location.formattedAddress.length - 2], '_blank') }}>{ venue.name }</span>
+</strong></h5>

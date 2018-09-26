@@ -11,6 +11,15 @@ body {
   height: 80px;
 }
 
+.venue-name {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+.venue-name:hover {
+  color: #0056b3;
+}
+
 .App-header {
   background-color: #222;
   height: 150px;
