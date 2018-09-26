@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }
@@ -22,7 +26,126 @@
   font-size: large;
 }
 
+.transition {
+  -webkit-transition: transition 0.3s;
+  -moz-transition: transition 0.3s;
+  -o-transition: transition 0.3s;
+  -ms-transition: transition 0.3s;
+  transition: 0.3s;
+}
+
+.middlr {
+	display: block;
+	margin: auto;
+}
+
+.info_box {
+  width: 300px;
+  max-width: 90%;
+}
+
+.polaroid {
+  width: 175px;
+  padding: 2px;
+  background: #f2f2f2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.input-s1 {
+    width: 375px;
+    max-width: 100%;
+    padding: 5px 0px 5px 0px;
+    line-height: normal;
+    border: 1px solid grey;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* --- */
+
+#navbar {
+  position: relative;
+  z-index: 100;
+  box-shadow: 0px 1px 1px grey;
+  background: black;
+}
+
+#sidebar {
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0px 1px 1px grey;
+  background: #f2f2f2;
+  width: 325px;
+  max-width: 100%;
+  height: calc(100vh - 60px);
+  overflow-y: scroll;
+}
+
+#sidebar-inner {
+  padding: 10px;
+}
+
+#map {
+  width: 100%;
+  height: calc(100vh - 60px);
+}
+
+#head-text {
+  margin: 0px;
+  color: white;
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  padding: 0px 20px;
+  word-spacing: 1.5px;
+  letter-spacing: 1.5px;
+  display: inline-block;
+}
+
+#menu-text {
+  float: right;
+  margin: 0px;
+  color: white;
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  padding: 0px 20px;
+  word-spacing: 1.5px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+#menu-text:hover {
+  background: #f2f2f2;
+  color: black;
+}
+
+#places-list {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+#places-list li {
+  list-style: none;
+  padding: 10px;
+  margin: 15px 0px;
+  border: 1px solid grey;
+  box-shadow: 0px 1px 1px grey;
+  background: white;
+  cursor: pointer;
+}
+
+#places-list li:hover {
+  background: lightgrey;
 }
