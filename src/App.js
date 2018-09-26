@@ -2,33 +2,67 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+
 import * as utils from './utils'
 
-function sort_by(array, property, direction) {
-let tempArray = array;
-tempArray.sort(function(a, b){
-  var x = a[property].constructor === String && a[property].toLowerCase() || a[property];
-  var y = b[property].constructor === String && b[property].toLowerCase() || b[property];
-  let value = direction && String(direction) || "asc";
-  switch(value) {
-    case "asc":
-      // asc
-      if (x < y) {return -1;}
-      if (x > y) {return 1;}
-      return 0;
-    case "desc":
-      // desc
-      if (x > y) {return -1;}
-      if (x < y) {return 1;}
-      return 0;
-    default:
-      // asc
-      if (x < y) {return -1;}
-      if (x > y) {return 1;}
-      return 0;
+
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+  paper: {
+    // position: 'absolute',
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    maxWidth: '95%'
   }
 });
-return tempArray;
+
+function sort_by(array, property, direction) {
+  let tempArray = array;
+  tempArray.sort(function(a, b){
+    var x = a[property].constructor === String && a[property].toLowerCase() || a[property];
+    var y = b[property].constructor === String && b[property].toLowerCase() || b[property];
+    let value = direction && String(direction) || "asc";
+    switch(value) {
+      case "asc":
+        // asc
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+      case "desc":
+        // desc
+        if (x > y) {return -1;}
+        if (x < y) {return 1;}
+        return 0;
+      default:
+        // asc
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+    }
+  });
+  return tempArray;
+}
+
+function getModalStyle() {
+  return {
+    top: `50%`,
+    // left: `${left}%`,
+    // transform: `translate(-${top}%, -${left}%)`,
+    display: 'block',
+    margin: 'auto'
+  };
 }
 
 
@@ -39,11 +73,22 @@ class App extends Component {
     this.state = {
       filtered: null,
       sidebarOpen: false,
-      query: ""
+      query: "",
+      showModal: false
     }
     this.toggleSideBar = this.toggleSideBar.bind(this);
     this.loadPlaces = this.loadPlaces.bind(this);
     this.menuKeyEnter = this.menuKeyEnter.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleClose() {
+    this.setState({ showModal: false });
+  }
+
+  handleShow() {
+    this.setState({ showModal: true });
   }
 
   toggleSideBar() {
@@ -92,19 +137,21 @@ class App extends Component {
           return resolve(result) ;
         }
         console.log('fetching moco-wiki...');
-        var apiURL = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=montgomery%20county%20maryland&format=json&callback=?';
-        fetch(apiURL, {mode: 'cors'})
-        .then(resp => resp.json())
-        .then(json => {
-          console.log('storing moco-wiki...');
-          utils.storeAJAXfetch("moco-wiki", json)
-          .then(res => {
-            console.log('stored moco-wiki');
-            return resolve(json);
-          })
-        })
-        .catch(error => {
-          reject(error);
+        window.$.ajax({
+          url: 'https://en.wikipedia.org/w/api.php?action=opensearch&search=montgomery%20county%20maryland&format=json&callback=wikicallback',
+          dataType: 'jsonp',
+          success: function(resp) {
+            console.log('storing moco-wiki...');
+            utils.storeAJAXfetch("moco-wiki", resp)
+            .then(res => {
+              console.log('stored moco-wiki');
+              return resolve(resp);
+            })
+          },
+          error: function(e) {
+            console.log(e);
+            reject(e);
+          }
         })
       })
       .catch(error => {
@@ -168,13 +215,15 @@ class App extends Component {
   componentDidMount() {
     let get_google = this.getGoogleMaps();
     let get_venues = this.loadPlaces();
-    // let get_wiki = this.loadWiki(); // not working
+    let get_wiki = this.loadWiki();
 
-    Promise.all([ get_google, get_venues ])
+    Promise.all([ get_google, get_venues, get_wiki ])
     .then(values => {
       console.log(values);
       let google = values[0];
       let venues = values[1];
+      let wikidata = values[2];
+
       let markers = [];
       let info_boxes = [];
 
@@ -222,7 +271,7 @@ class App extends Component {
       this.markers = sort_by(markers, "name", "asc");
       this.info_boxes = sort_by(info_boxes, "name", "asc");
 
-      this.setState({ sidebarOpen: true, filtered: this.venues });
+      this.setState({ sidebarOpen: true, filtered: this.venues, wikidata });
     })
     .catch(error => {
       console.log(error);
@@ -248,6 +297,7 @@ class App extends Component {
   }
 
   render() {
+    let { classes } = this.props;
     let displaySidebar = this.state.sidebarOpen ? "block" : "none";
     let menuText = this.state.sidebarOpen ? "Close" : "Open";
 
@@ -256,7 +306,7 @@ class App extends Component {
         {/* Nav Bar */}
         <nav id="navbar" role="navigation">
           <h3 id="head-text">Neighborhood Maps</h3>
-          <h3 tabIndex="0" id="menu-text" className="transition" title={ menuText + " Sidebar" }
+          <h3 tabIndex="0" className="transition menu-text" title={ menuText + " Sidebar" }
             onClick={() => { this.toggleSideBar() }} onKeyPress={this.menuKeyEnter}>
             {
               this.state.sidebarOpen ?
@@ -269,13 +319,21 @@ class App extends Component {
         {/* Side Bar */}
         <section id="sidebar" style={{ display: displaySidebar }}>
           <div id="sidebar-inner">
+            { this.state.wikidata &&
+              <p className="text-center">
+                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleShow}>
+                  Info
+                </Button>
+              </p>
+            }
+
             <input className="transition middlr input-s1" placeholder="Filter Venues"
               value={this.state.query} onChange={(e) => { this.filterVenues(e.target.value) }} />
             <ul id="places-list">
               {
                 this.state.filtered && this.state.filtered.map((venue, key) => (
                   <li className="transition" key={ venue.id } onClick={() => { this.li_click(venue) }}>
-                    <h4><strong><a title={ venue.name } href={"https://www.google.com/search?q=" + venue.name}>{ venue.name }</a></strong></h4>
+                    <h5><strong><a title={ venue.name } href={"https://www.google.com/search?q=" + venue.name}>{ venue.name }</a></strong></h5>
                     <p>
                       {
                         venue.location.formattedAddress.map((value, index) => {
@@ -294,6 +352,30 @@ class App extends Component {
           </div>
         </section>
 
+        {/* Modal */}
+        {
+          this.state.wikidata && (
+            <Modal aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description" open={this.state.showModal} onClose={this.handleClose}>
+              <div className="modal-box">
+                <div style={getModalStyle()} className={classes.paper}>
+                  <Typography variant="title" id="modal-title">
+                    {this.state.wikidata[1][0]}
+                  </Typography>
+
+                  <br/>
+
+                  <p>
+                    {this.state.wikidata[2][0]}
+                  </p>
+                  <p>
+                    <a title={this.state.wikidata[1][0]} href={this.state.wikidata[3][0]}>Read more on wikipedia</a>
+                  </p>
+                </div>
+              </div>
+            </Modal>
+          )
+        }
+
         {/* Map Div */}
         <main>
           <div role="application" aria-hidden="true" id="map"></div>
@@ -303,4 +385,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const AppWrapped = withStyles(styles)(App);
+
+export default AppWrapped;

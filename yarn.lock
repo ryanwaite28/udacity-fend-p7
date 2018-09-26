@@ -40,6 +40,17 @@
     recompose "0.28.0 - 0.30.0"
     warning "^4.0.1"
 
+"@react-bootstrap/react-popper@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@react-bootstrap/react-popper/-/react-popper-1.2.1.tgz#4edf4851d5b4dcf2eb6b264ebbed1a7b7654177b"
+  dependencies:
+    babel-runtime "6.x.x"
+    create-react-context "^0.2.1"
+    popper.js "^1.14.4"
+    prop-types "^15.6.1"
+    typed-styles "^0.0.5"
+    warning "^3.0.0"
+
 "@types/jss@^9.5.3":
   version "9.5.6"
   resolved "https://registry.yarnpkg.com/@types/jss/-/jss-9.5.6.tgz#96e1d246ddfbccc4867494077c714773cf29acde"
@@ -1018,7 +1029,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@6.x.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -1141,6 +1152,10 @@ bonjour@^3.5.0:
 boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
+
+bootstrap@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.1.3.tgz#0eb371af2c8448e8c210411d0cb824a6409a12be"
 
 boxen@^1.2.1:
   version "1.3.0"
@@ -1482,7 +1497,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -1766,6 +1781,13 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+create-react-context@^0.2.1:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.3.tgz#9ec140a6914a22ef04b8b09b7771de89567cb6f3"
+  dependencies:
+    fbjs "^0.8.0"
+    gud "^1.0.0"
 
 cross-spawn@5.1.0, cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
@@ -2133,7 +2155,7 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
-dom-helpers@^3.2.1, dom-helpers@^3.3.1:
+dom-helpers@^3.2.0, dom-helpers@^3.2.1, dom-helpers@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
 
@@ -2754,7 +2776,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.1:
+fbjs@^0.8.0, fbjs@^0.8.1:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -3097,6 +3119,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
+
+gud@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
 gzip-size@3.0.0:
   version "3.0.0"
@@ -3476,7 +3502,7 @@ interpret@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
-invariant@^2.2.2:
+invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -4282,7 +4308,7 @@ jsx-ast-utils@^2.0.0:
   dependencies:
     array-includes "^3.0.3"
 
-keycode@^2.1.9:
+keycode@^2.1.2, keycode@^2.1.9:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
 
@@ -5237,7 +5263,7 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
-popper.js@^1.14.1:
+popper.js@^1.14.1, popper.js@^1.14.3, popper.js@^1.14.4:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.4.tgz#8eec1d8ff02a5a3a152dd43414a15c7b79fd69b6"
 
@@ -5594,7 +5620,14 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2:
+prop-types-extra@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/prop-types-extra/-/prop-types-extra-1.1.0.tgz#32609910ea2dcf190366bacd3490d5a6412a605f"
+  dependencies:
+    react-is "^16.3.2"
+    warning "^3.0.0"
+
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -5722,6 +5755,30 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-bootstrap@^1.0.0-beta.1:
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.0.0-beta.1.tgz#976cd1f94d86785f374b00d7674e03ae72d37c0c"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@react-bootstrap/react-popper" "1.2.1"
+    classnames "^2.2.6"
+    dom-helpers "^3.2.0"
+    invariant "^2.2.3"
+    keycode "^2.1.2"
+    popper.js "^1.14.3"
+    prop-types "^15.6.2"
+    prop-types-extra "^1.1.0"
+    react-context-toolbox "^1.2.1"
+    react-overlays "^1.0.0-beta.17"
+    react-prop-types "^0.4.0"
+    react-transition-group "^2.4.0"
+    uncontrollable "^6.0.0"
+    warning "^4.0.1"
+
+react-context-toolbox@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-context-toolbox/-/react-context-toolbox-1.2.2.tgz#3fd9a07b0618ae398d232098a04c2b9f0abdbb86"
+
 react-dev-utils@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.2.tgz#7bb68d2c4f6ffe7ed1184c5b0124fcad692774d2"
@@ -5745,7 +5802,7 @@ react-dev-utils@^5.0.2:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dom@^16.5.2:
+react-dom@^16.2.0, react-dom@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
   dependencies:
@@ -5766,6 +5823,10 @@ react-event-listener@^0.6.2:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-is@^16.3.2:
+  version "16.5.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
+
 react-jss@^8.1.0:
   version "8.6.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.6.1.tgz#a06e2e1d2c4d91b4d11befda865e6c07fbd75252"
@@ -5779,6 +5840,43 @@ react-jss@^8.1.0:
 react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-materialize@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/react-materialize/-/react-materialize-2.4.5.tgz#69e33c68b2e823051031ee26d9b200bffe86fbcb"
+  dependencies:
+    classnames "^2.2.5"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+
+react-overlays@^1.0.0-beta.17:
+  version "1.0.0-beta.17"
+  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-1.0.0-beta.17.tgz#f43514eb3da2ed1b31f9a621f6839cb4116fba3a"
+  dependencies:
+    classnames "^2.2.6"
+    dom-helpers "^3.3.1"
+    prop-types "^15.6.2"
+    prop-types-extra "^1.1.0"
+    react-context-toolbox "^1.2.1"
+    react-popper "^1.0.2"
+    warning "^4.0.2"
+
+react-popper@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.0.2.tgz#0e72f338b7f15ab9f9ec884e36ae0dad78a3e301"
+  dependencies:
+    babel-runtime "6.x.x"
+    create-react-context "^0.2.1"
+    popper.js "^1.14.1"
+    prop-types "^15.6.1"
+    typed-styles "^0.0.5"
+    warning "^3.0.0"
+
+react-prop-types@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.4.0.tgz#f99b0bfb4006929c9af2051e7c1414a5c75b93d0"
+  dependencies:
+    warning "^3.0.0"
 
 react-scripts@1.1.5:
   version "1.1.5"
@@ -5825,7 +5923,7 @@ react-scripts@1.1.5:
   optionalDependencies:
     fsevents "^1.1.3"
 
-react-transition-group@^2.2.1:
+react-transition-group@^2.2.1, react-transition-group@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.4.0.tgz#1d9391fabfd82e016f26fabd1eec329dbd922b5a"
   dependencies:
@@ -5834,7 +5932,7 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.5.2:
+react@^16.2.0, react@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
   dependencies:
@@ -6877,6 +6975,10 @@ type-is@~1.6.15, type-is@~1.6.16:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
+typed-styles@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/typed-styles/-/typed-styles-0.0.5.tgz#a60df245d482a9b1adf9c06c078d0f06085ed1cf"
+
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
@@ -6912,6 +7014,12 @@ uglifyjs-webpack-plugin@^0.4.6:
     source-map "^0.5.6"
     uglify-js "^2.8.29"
     webpack-sources "^1.0.1"
+
+uncontrollable@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-6.0.0.tgz#d39a3d5334802a862a0ef4a6e4ba0d19b8ddec4d"
+  dependencies:
+    invariant "^2.2.4"
 
 union-value@^1.0.0:
   version "1.0.0"
@@ -7097,7 +7205,7 @@ warning@^3.0.0:
   dependencies:
     loose-envify "^1.0.0"
 
-warning@^4.0.1:
+warning@^4.0.1, warning@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.2.tgz#aa6876480872116fa3e11d434b0d0d8d91e44607"
   dependencies:

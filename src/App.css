@@ -41,7 +41,6 @@ body {
 
 .info_box {
   width: 300px;
-  max-width: 90%;
 }
 
 .polaroid {
@@ -54,10 +53,23 @@ body {
   margin-bottom: 10px;
 }
 
+.menu-text {
+  float: right;
+  margin: 0px;
+  color: white;
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  padding: 0px 20px;
+  word-spacing: 1.5px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
 .input-s1 {
     width: 375px;
     max-width: 100%;
-    padding: 5px 0px 5px 0px;
+    padding: 5px;
     line-height: normal;
     border: 1px solid grey;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -65,6 +77,24 @@ body {
     -moz-border-radius: 2px;
     -o-border-radius: 2px;
     -ms-border-radius: 2px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+
+.modal-box {
+  position: fixed;
+  width: 100%;
+  margin-top: 25vh;
+  overflow: hidden;
 }
 
 @keyframes App-logo-spin {
@@ -113,18 +143,6 @@ body {
   display: inline-block;
 }
 
-#menu-text {
-  float: right;
-  margin: 0px;
-  color: white;
-  height: 60px;
-  line-height: 60px;
-  vertical-align: middle;
-  padding: 0px 20px;
-  word-spacing: 1.5px;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-}
 #menu-text:hover {
   background: #f2f2f2;
   color: black;
@@ -148,4 +166,8 @@ body {
 
 #places-list li:hover {
   background: lightgrey;
+}
+
+@media (max-width: 475px) {
+  #head-text {font-size: 1rem;}
 }
