@@ -224,6 +224,10 @@ class App extends Component {
 
       this.setState({ sidebarOpen: true, filtered: this.venues });
     })
+    .catch(error => {
+      console.log(error);
+      alert('Error loading page...');
+    })
   }
 
   filterVenues(query) {
