@@ -256,7 +256,7 @@ class App extends Component {
         {/* Nav Bar */}
         <nav id="navbar" role="navigation">
           <h3 id="head-text">Neighborhood Maps</h3>
-          <h3 tabindex="0" id="menu-text" className="transition" title={ menuText + " Sidebar" }
+          <h3 tabIndex="0" id="menu-text" className="transition" title={ menuText + " Sidebar" }
             onClick={() => { this.toggleSideBar() }} onKeyPress={this.menuKeyEnter}>
             {
               this.state.sidebarOpen ?
