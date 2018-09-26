@@ -48,7 +48,7 @@ class SideBar extends Component {
           <ul id="places-list">
             {
               this.props.filtered && this.props.filtered.map((venue, key) => (
-                <li tabIndex="0" className="transition" key={ venue.id } onClick={() => { this.props.li_click(venue) }} onKeyPress={(event) => { this.props.liKeyEnter(event, venue) }}>
+                <li tabIndex="0" className="transition" title={ venue.name } key={ venue.id } onClick={() => { this.props.li_click(venue) }} onKeyPress={(event) => { this.props.liKeyEnter(event, venue) }}>
                   <h5><strong>
                     <span className="venue-name"
                       onClick={() => { window.open("https://www.google.com/search?q=" + venue.name + ' ' + venue.location.formattedAddress[venue.location.formattedAddress.length - 2], '_blank') }}
