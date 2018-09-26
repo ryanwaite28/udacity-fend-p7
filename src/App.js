@@ -43,7 +43,7 @@ class App extends Component {
     }
     this.toggleSideBar = this.toggleSideBar.bind(this);
     this.loadPlaces = this.loadPlaces.bind(this);
-    this.liPlaceClick = this.liPlaceClick.bind(this);
+    this.menuKeyEnter = this.menuKeyEnter.bind(this);
   }
 
   toggleSideBar() {
@@ -111,10 +111,6 @@ class App extends Component {
         reject(error);
       })
     });
-  }
-
-  liPlaceClick(venue) {
-    this.setState({ lastClickedPlace: venue });
   }
 
   getGoogleMaps() {
@@ -240,6 +236,13 @@ class App extends Component {
     this.setState({ filtered: f, query: query });
   }
 
+  menuKeyEnter(event) {
+    var code = event.keyCode || event.which;
+    if(code === 13) {
+      this.toggleSideBar();
+    }
+  }
+
   render() {
     let displaySidebar = this.state.sidebarOpen ? "block" : "none";
     let menuText = this.state.sidebarOpen ? "Close" : "Open";
@@ -247,19 +250,20 @@ class App extends Component {
     return (
       <div id="app-container">
         {/* Nav Bar */}
-        <div id="navbar">
+        <nav id="navbar" role="navigation">
           <h3 id="head-text">Neighborhood Maps</h3>
-          <h3 id="menu-text" className="transition" title={ menuText + " Sidebar" } onClick={() => { this.toggleSideBar() }}>
+          <h3 tabindex="0" id="menu-text" className="transition" title={ menuText + " Sidebar" }
+            onClick={() => { this.toggleSideBar() }} onKeyPress={this.menuKeyEnter}>
             {
               this.state.sidebarOpen ?
               <i className="material-icons" style={{lineHeight: "inherit"}}>clear</i> :
               <i className="material-icons" style={{lineHeight: "inherit"}}>menu</i>
             }
           </h3>
-        </div>
+        </nav>
 
         {/* Side Bar */}
-        <div id="sidebar" style={{ display: displaySidebar }}>
+        <section id="sidebar" style={{ display: displaySidebar }}>
           <div id="sidebar-inner">
             <input className="transition middlr input-s1" placeholder="Filter Venues"
               value={this.state.query} onChange={(e) => { this.filterVenues(e.target.value) }} />
@@ -284,10 +288,12 @@ class App extends Component {
               }
             </ul>
           </div>
-        </div>
+        </section>
 
         {/* Map Div */}
-        <div id="map"></div>
+        <main>
+          <div role="application" aria-hidden="true" id="map"></div>
+        </main>
       </div>
     );
   }
