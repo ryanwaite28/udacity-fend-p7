@@ -13,6 +13,12 @@ class NavBar extends Component {
             <i className="material-icons" style={{lineHeight: "inherit"}}>menu</i>
           }
         </h3>
+        { this.props.wikidata &&
+          <h3 tabIndex="0" className="transition menu-text" title={ this.props.menuText + " Sidebar" }
+            onClick={() => { this.props.handleShow() }} onKeyPress={this.props.infoKeyEnter}>
+            <i className="material-icons" style={{lineHeight: "inherit"}}>info</i>
+          </h3>
+        }
       </nav>
     );
   }

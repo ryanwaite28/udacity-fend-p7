@@ -21,7 +21,9 @@ class App extends Component {
       showModal: false
     }
     this.toggleSideBar = this.toggleSideBar.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.menuKeyEnter = this.menuKeyEnter.bind(this);
+    this.infoKeyEnter = this.infoKeyEnter.bind(this);
     this.liKeyEnter = this.liKeyEnter.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -40,6 +42,10 @@ class App extends Component {
 
   toggleSideBar () {
     this.setState(state => ({ sidebarOpen: !state.sidebarOpen }));
+  }
+
+  toggleModal () {
+    this.setState(state => ({ showModal: !state.showModal }));
   }
 
   getGoogleMaps() {
@@ -166,6 +172,13 @@ class App extends Component {
     }
   }
 
+  infoKeyEnter(event) {
+    var code = event.keyCode || event.which;
+    if(code === 13) {
+      this.toggleModal();
+    }
+  }
+
   liKeyEnter(event, venue) {
     var code = event.keyCode || event.which;
     if(code === 13) {
@@ -184,7 +197,11 @@ class App extends Component {
           menuText={menuText}
           sidebarOpen={this.state.sidebarOpen}
           toggleSideBar={this.toggleSideBar}
+          toggleModal={this.toggleModal}
           li_click={this.li_click}
+          wikidata={this.state.wikidata}
+          handleShow={this.handleShow}
+          infoKeyEnter={this.infoKeyEnter}
           menuKeyEnter={this.menuKeyEnter} />
 
         {/* Side Bar */}
