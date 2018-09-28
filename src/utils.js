@@ -200,3 +200,56 @@ export function loadWiki() {
 export function getGoogleImage(venue) {
   return 'https://maps.googleapis.com/maps/api/streetview?size=150x150&location=' + venue.location.lat + ',' + venue.location.lng + '&heading=151.78&pitch=-0.76&key=AIzaSyB6N63ZIGH4b8Hgm9KhodA87Guuiem3C8Y'
 }
+
+export function getFlickrPhotos(query = "DMV") {
+  return new Promise(function(resolve, reject){
+    getAJAXfetches("flickr-pictures")
+    .then(result => {
+      if(result) {
+        console.log('returning flickr-pictures from idb');
+        return resolve(result) ;
+      }
+
+      window.jsonFlickrApi = function(json){
+        let photos_list = [];
+
+        for(let photo of json.photos.photo) {
+          var farm = photo.farm;
+          var id = photo.id;
+          var secret = photo.secret;
+          var server = photo.server;
+
+          var img = 'https://farm' + farm + '.staticflickr.com/' + server +
+          '/' + id + '_' + secret + '.jpg';
+
+          let Photo = Object.assign({}, photo, { img: img });
+
+          photos_list.push(Photo);
+        }
+
+        console.log('storing flickr-pictures...');
+        storeAJAXfetch("flickr-pictures", photos_list)
+        .then(res => {
+          console.log('stored flickr-pictures');
+          resolve(photos_list);
+          delete window.jsonFlickrApi;
+        })
+      }
+
+      var flickrAPI = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' +
+      '3909720ecbeba83d318a1dd0a7578f03' + '&tags=' + query + '&format=json&callback=?';
+
+      console.log('fetching flickr-pictures...');
+      window.$.ajax({
+        url: flickrAPI,
+        dataType: 'jsonp',
+        success: function(resp) {
+          console.log(resp);
+        }
+      });
+    })
+    .catch(error => {
+      reject(error);
+    })
+  });
+}

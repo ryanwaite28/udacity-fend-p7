@@ -4,6 +4,7 @@ import './App.css';
 import MapDiv from './components/MapDiv';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
+// import FlickrBar from './components/FlickrBar';
 import InfoModal from './components/InfoModal';
 
 import * as utils from './utils'

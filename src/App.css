@@ -157,6 +157,27 @@ body {
   color: black;
 }
 
+#pictures-ul {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 2px;
+  padding: 2px;
+}
+#pictures-ul > li {
+  list-style: none;
+  width: 350px;
+  max-width: 100%;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+#pictures-ul > li > img{
+  width: 100%;
+  padding: 3px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
 #places-list {
   margin: 0px;
   padding: 0px;
